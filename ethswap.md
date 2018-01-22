@@ -50,5 +50,59 @@ Ideally you could upload your key into a program that can take care of the coord
 
 Ideal multimillion$ solution? We create a full client thats working as a desktop application that follows both chains. They run together. You send money to a controlled key, and it does its thing. Would be cool if Ethereum classic should actually run ethereum and itself both. Id have it as my default then. It might be cool, *if* this became a big market (like etherdelta) trading all the coins of ETH with all those of ETC. Its just so hard to get the security right though. Hard to develop in this environment. Anything of significant complication, and you want a safety net.
 
-### TODO
-  - provide smart contracts
+### Smart Contracts
+```
+pragma solidity ^0.4.0;
+
+//deployed on ETH
+contract Maker{
+    uint constant TIMELOCK = 600;
+    uint expiration;
+    uint bid; //the price willing to pay (non binding)
+    address player1;
+    address player2;
+    bytes32 hashedSecret;
+    
+    modifier onlyPlayer1(){ if(msg.sender == player1) _; }
+    modifier onlyAfterExpiration(){ if(now < expiration) _; }
+    modifier onlyBeforeExiration(){ if(now < expiration) _; }
+    modifier onlyWithSecret(bytes32 secret){ if(sha3(secret) == hashedSecret) _; }
+    
+    function offer(bytes32 hashedSecret, uint bid) payable onlyPlayer1{
+        expiration = now + 3*TIMELOCK;
+    }
+    
+    function withdrawOffer() onlyPlayer1 onlyAfterExpiration{
+        player1.send(this.balance);
+    }
+    
+    function collect(bytes32 secret) onlyBeforeExiration onlyWithSecret(secret){
+        player2.send(this.balance);
+    }
+}
+
+//deployed on ETC
+contract Taker{
+    uint constant TIMELOCK = 600;
+    uint expiration;
+    address player2;
+    bytes32 hashedSecret;
+    
+    modifier onlyPlayer2(){ if(msg.sender == player2) _; }
+    modifier onlyAfterExpiration(){ if(now < expiration) _; }
+    modifier onlyBeforeExiration(){ if(now < expiration) _; }
+    modifier onlyWithSecret(bytes32 secret){ if(sha3(secret) == hashedSecret) _; }
+    
+    function offer(bytes32 hashedSecret) payable onlyPlayer2{
+        expiration = now + 2*TIMELOCK;
+    }
+    
+    function withdrawOffer() onlyPlayer2 onlyAfterExpiration{
+        player2.send(this.balance);
+    }
+    
+    function collect(bytes32 secret) onlyBeforeExiration onlyWithSecret(secret){
+        msg.sender.send(this.balance);
+    }
+}
+```
