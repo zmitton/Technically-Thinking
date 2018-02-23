@@ -3,7 +3,7 @@
 ### Features
   - No constant monitoring or relaying of headers required
   - Basic atomic swapping of tokens
-  - Bids and Offers
+  - Bids and Asks
 
 ### MVP
 
@@ -44,61 +44,53 @@ It should be possible to extend this concept from singular swaps, to ongoing ord
 
 ### Architecture
 
-???
+Besides the contracts, there are many more pieces in order to deliver a fluid UX. A stateless webpage can be constructed. It will use either centralized APIs like (infura and epool), or it could require the user has metamask(ETH) and the ETC version of it. It would be more robust to create the tools for running 2 light clients together in a console app.
+
+
 
 ### Smart Contracts
 ```
 pragma solidity ^0.4.0;
 
-//deployed on ETH
-contract Maker{
-    uint constant TIMELOCK = 600;
-    uint expiration;
-    uint bid; //the price willing to pay (non binding)
-    address player1;
-    address player2;
-    bytes32 hashedSecret;
-    
-    modifier onlyPlayer1(){ if(msg.sender == player1) _; }
-    modifier onlyAfterExpiration(){ if(now < expiration) _; }
-    modifier onlyBeforeExiration(){ if(now < expiration) _; }
-    modifier onlyWithSecret(bytes32 secret){ if(sha3(secret) == hashedSecret) _; }
-    
-    function offer(bytes32 hashedSecret, uint bid) payable onlyPlayer1{
-        expiration = now + 3*TIMELOCK;
-    }
-    
-    function withdrawOffer() onlyPlayer1 onlyAfterExpiration{
-        player1.send(this.balance);
-    }
-    
-    function collect(bytes32 secret) onlyBeforeExiration onlyWithSecret(secret){
-        player2.send(this.balance);
-    }
-}
+pragma solidity ^0.4.0;
 
-//deployed on ETC
-contract Taker{
-    uint constant TIMELOCK = 600;
-    uint expiration;
-    address player2;
+contract Swap{
+    uint constant TIMELOCK = 600; //10 min
+    uint expirationOfOffer;
+    uint expirationOfFulfillment;
+    address offerer = 0x1F4E7Db8514Ec4E99467a8d2ee3a63094a904e7A;
+    address filler = 0x393B2103Ee8016F763efe4e1A681ccd4A6E3393B;
     bytes32 hashedSecret;
     
-    modifier onlyPlayer2(){ if(msg.sender == player2) _; }
-    modifier onlyAfterExpiration(){ if(now < expiration) _; }
-    modifier onlyBeforeExiration(){ if(now < expiration) _; }
-    modifier onlyWithSecret(bytes32 secret){ if(sha3(secret) == hashedSecret) _; }
+    modifier only(address party){ if(msg.sender == party) _; }
+    modifier onlyTaker(){ if(msg.sender == filler) _; }
+
+    modifier onlyAfter(uint expiration){ if(now > expiration) _; }
+    modifier onlyBefore(uint expiration){ if(now <= expiration) _; }
+    modifier onlyWithSecret(bytes32 secret){ if(keccak256(secret) == hashedSecret) _; }
     
-    function offer(bytes32 hashedSecret) payable onlyPlayer2{
-        expiration = now + 2*TIMELOCK;
+//functions to be performed on blockchain A
+    function offer(bytes32 _hashedSecret) public payable only(offerer){
+        if(hashedSecret == 0){ hashedSecret = _hashedSecret; }
+        expirationOfOffer = now + 3*TIMELOCK;
     }
-    
-    function withdrawOffer() onlyPlayer2 onlyAfterExpiration{
-        player2.send(this.balance);
+    function collectOffer(bytes32 secret) onlyBefore(expirationOfOffer) onlyWithSecret(secret){
+        filler.send(this.balance);
     }
-    
-    function collect(bytes32 secret) onlyBeforeExiration onlyWithSecret(secret){
-        msg.sender.send(this.balance);
+    function withdrawOffer() only(offerer) onlyAfter(expirationOfOffer){
+        offerer.send(this.balance);
+    }
+
+//functions to be performed on blockchain B
+    function fulfill(bytes32 _hashedSecret) payable only(filler){
+        if(hashedSecret == 0){ hashedSecret = _hashedSecret; }
+        expirationOfFulfillment = now + 2*TIMELOCK;
+    }
+    function collectFulfillment(bytes32 secret) only(offerer) onlyBefore(expirationOfFulfillment) onlyWithSecret(secret){
+        offerer.send(this.balance);
+    }
+    function withdrawFulfillment() only(filler) onlyAfter(expirationOfFulfillment){
+        filler.send(this.balance);
     }
 }
 ```

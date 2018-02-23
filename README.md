@@ -1,3 +1,4 @@
 # Technically Thinking
 
-This is my blob. Click a title (ending in `.md`) from the files list to read an article
+This is my blog. Click a title (ending in `.md`) from the files list to read an article
+It is hosted here for now: [VoltzRoad.com](http://voltzroad.com).
