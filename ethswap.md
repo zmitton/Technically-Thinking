@@ -52,8 +52,6 @@ Besides the contracts, there are many more pieces in order to deliver a fluid UX
 ```
 pragma solidity ^0.4.0;
 
-pragma solidity ^0.4.0;
-
 contract Swap{
     uint constant TIMELOCK = 600; //10 min
     uint expirationOfOffer;
