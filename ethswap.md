@@ -49,7 +49,7 @@ Besides the contracts, there are many more pieces in order to deliver a fluid UX
 
 
 ### Smart Contracts
-```
+```solidity
 pragma solidity ^0.4.0;
 
 contract Swap{
