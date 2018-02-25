@@ -66,8 +66,7 @@ contract Swap{
     modifier onlyAfter(uint expiration){ if(now > expiration) _; }
     modifier onlyBefore(uint expiration){ if(now <= expiration) _; }
     modifier onlyWithSecret(bytes32 secret){ if(keccak256(secret) == hashedSecret) _; }
-    
-//functions to be performed on blockchain A
+
     function offer(bytes32 _hashedSecret) public payable only(offerer){
         if(hashedSecret == 0){ hashedSecret = _hashedSecret; }
         expirationOfOffer = now + 3*TIMELOCK;
@@ -79,7 +78,6 @@ contract Swap{
         offerer.transfer(this.balance);
     }
 
-//functions to be performed on blockchain B
     function fulfill(bytes32 _hashedSecret) public payable only(filler){
         if(hashedSecret == 0){ hashedSecret = _hashedSecret; }
         expirationOfFulfillment = now + 2*TIMELOCK;
