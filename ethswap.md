@@ -72,23 +72,23 @@ contract Swap{
         if(hashedSecret == 0){ hashedSecret = _hashedSecret; }
         expirationOfOffer = now + 3*TIMELOCK;
     }
-    function collectOffer(bytes32 secret) onlyBefore(expirationOfOffer) onlyWithSecret(secret){
-        filler.send(this.balance);
+    function collectOffer(bytes32 secret) public onlyBefore(expirationOfOffer) onlyWithSecret(secret){
+        filler.transfer(this.balance);
     }
-    function withdrawOffer() only(offerer) onlyAfter(expirationOfOffer){
-        offerer.send(this.balance);
+    function withdrawOffer() public only(offerer) onlyAfter(expirationOfOffer){
+        offerer.transfer(this.balance);
     }
 
 //functions to be performed on blockchain B
-    function fulfill(bytes32 _hashedSecret) payable only(filler){
+    function fulfill(bytes32 _hashedSecret) public payable only(filler){
         if(hashedSecret == 0){ hashedSecret = _hashedSecret; }
         expirationOfFulfillment = now + 2*TIMELOCK;
     }
-    function collectFulfillment(bytes32 secret) only(offerer) onlyBefore(expirationOfFulfillment) onlyWithSecret(secret){
-        offerer.send(this.balance);
+    function collectFulfillment(bytes32 secret) public only(offerer) onlyBefore(expirationOfFulfillment) onlyWithSecret(secret){
+        offerer.transfer(this.balance);
     }
-    function withdrawFulfillment() only(filler) onlyAfter(expirationOfFulfillment){
-        filler.send(this.balance);
+    function withdrawFulfillment() only(filler) public onlyAfter(expirationOfFulfillment){
+        filler.transfer(this.balance);
     }
 }
 ```
