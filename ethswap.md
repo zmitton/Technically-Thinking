@@ -61,8 +61,6 @@ contract Swap{
     bytes32 hashedSecret;
     
     modifier only(address party){ if(msg.sender == party) _; }
-    modifier onlyTaker(){ if(msg.sender == filler) _; }
-
     modifier onlyAfter(uint expiration){ if(now > expiration) _; }
     modifier onlyBefore(uint expiration){ if(now <= expiration) _; }
     modifier onlyWithSecret(bytes32 secret){ if(keccak256(secret) == hashedSecret) _; }
