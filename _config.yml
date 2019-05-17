@@ -28,7 +28,7 @@ github_username: zmitton
 
 # Build settings
 markdown: kramdown
-theme: jekyll-theme-cayman
+theme: jekyll-theme-hacker
 plugins:
   - jekyll-feed
 
