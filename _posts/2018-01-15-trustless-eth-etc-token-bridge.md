@@ -1,11 +1,9 @@
 ---
 layout: post
 title:  "Trustless ETH <-> ETC Token Bridge"
-date:   2019-05-20 11:47:00 -0400
+date:   2018-01-15 11:47:00 -0400
 categories: Ethereum
 ---
-
-## Trustless ETH <-> ETC Token Bridge
 
 ### Features
   - No constant monitoring or relaying of headers required
