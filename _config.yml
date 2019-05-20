@@ -17,10 +17,10 @@ title: Technically Thinking
 email: zacattack@zacmitton.com
 description: >- # this means to ignore newlines until "baseurl:"
   I’m Zac Mitton. This is my blog.
-baseurl: "/Technically-Thinking" # the subpath of your site, e.g. /blog
+baseurl: "/Technically-Thinking/" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
-# twitter_username: zmitton
-# github_username:  zmitton
+github: { owner_url: https://github.com/zmitton, owner_name: Zac Mitton }
+twitter: { username: voltzroad }
 
 # Build settings
 markdown: kramdown
