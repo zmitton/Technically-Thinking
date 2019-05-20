@@ -27,6 +27,14 @@ twitter:
 
 # Build settings
 markdown: kramdown
+highlighter: rouge
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+  # Un-comment following lines if you'd like line numbers in code syntax
+  # syntax_highlighter_opts:
+  #   line_numbers: true
+  #   start_line: 1
 theme:
 plugins:
   - jekyll-feed
