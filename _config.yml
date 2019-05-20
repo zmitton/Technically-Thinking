@@ -35,6 +35,7 @@ kramdown:
   # syntax_highlighter_opts:
   #   line_numbers: true
   #   start_line: 1
+# leave theme blank for cayman-blog theme to work
 theme:
 plugins:
   - jekyll-feed
