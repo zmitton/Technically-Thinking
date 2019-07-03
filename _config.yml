@@ -14,6 +14,7 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 title: Technically Thinking
+<<<<<<< HEAD
 email: zacattack@TechnicallyThinking.com
 description: >- # this means to ignore newlines until "baseurl:"
   I am Zac Mitton, a web developer living in the San Francisco Bay area.
@@ -29,6 +30,31 @@ github_username: zmitton
 # Build settings
 markdown: kramdown
 theme: jekyll-theme-cayman
+=======
+email: zacattack@zacmitton.com
+description: >- # this means to ignore newlines until "baseurl:"
+  I’m Zac Mitton. This is my blog.
+baseurl: "/Technically-Thinking/" # the subpath of your site, e.g. /blog
+url: "" # the base hostname & protocol for your site, e.g. http://example.com
+github:
+  owner_url: https://github.com/zmitton
+  owner_name: Zac Mitton
+twitter:
+  username: voltzroad
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+  # Un-comment following lines if you'd like line numbers in code syntax
+  # syntax_highlighter_opts:
+  #   line_numbers: true
+  #   start_line: 1
+# leave theme blank for cayman-blog theme to work
+theme:
+>>>>>>> 2cb9717e925b2b1546da61e287644c2fcc79948d
 plugins:
   - jekyll-feed
 

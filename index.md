@@ -1,6 +1,27 @@
 ---
+<<<<<<< HEAD
 # Feel free to add content and custom Front Matter to this file.
 # To modify the layout, see https://jekyllrb.com/docs/themes/#overriding-theme-defaults
 
 layout: home
 ---
+=======
+#
+# Here you can change the text shown in the Home page before the Latest Posts section.
+#
+# Edit cayman-blog's home layout in _layouts instead if you wanna make some changes
+# See: https://jekyllrb.com/docs/themes/#overriding-theme-defaults
+#
+layout: home
+---
+
+Welcome to my blog, fellow technically thinkers.
+
+<!-- Cayman Blog Theme is a clean, responsive blogging theme for Jekyll. It is inspired by the Cayman Theme for Github Pages, which can be greatly used for single projects but not as blogging platform.
+
+This theme has instead all you need to start today blogging with Jekyll, and no effort: pages, posts, few social buttons. Try loading this on mobile too.
+
+Have a look at the Github page for more information.
+
+You find this descriptive text in the `index.md` file, so you can change it, or remove it completely, according to your needs. -->
+>>>>>>> 2cb9717e925b2b1546da61e287644c2fcc79948d
