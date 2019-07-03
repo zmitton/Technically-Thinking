@@ -14,23 +14,6 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 title: Technically Thinking
-<<<<<<< HEAD
-email: zacattack@TechnicallyThinking.com
-description: >- # this means to ignore newlines until "baseurl:"
-  I am Zac Mitton, a web developer living in the San Francisco Bay area.
-  This blog does not necessarily reflect the thoughts or opinions that
-  people actually know about me in real life. They would probably think I was weird.
-  I am. The point of this blog is express some weird ideas in hopes that other
-  weird people (like you?) come across them and we can connect.
-baseurl: "" # the subpath of your site, e.g. /blog
-url: "" # the base hostname & protocol for your site, e.g. http://example.com
-twitter_username: zacsTwitter
-github_username: zmitton
-
-# Build settings
-markdown: kramdown
-theme: jekyll-theme-cayman
-=======
 email: zacattack@zacmitton.com
 description: >- # this means to ignore newlines until "baseurl:"
   I’m Zac Mitton. This is my blog.
@@ -54,7 +37,6 @@ kramdown:
   #   start_line: 1
 # leave theme blank for cayman-blog theme to work
 theme:
->>>>>>> 2cb9717e925b2b1546da61e287644c2fcc79948d
 plugins:
   - jekyll-feed
 
